@@ -27,12 +27,22 @@ exports.add = async scheme => {
 };
 
 exports.update = async (changes, id) => {
-  const numberOfUpdatedElements =  await db('schemes').where({ id }).update(changes);
+  const numberOfUpdatedElements = await db('schemes')
+    .where({ id })
+    .update(changes);
   return this.findById(id);
 };
 
 exports.remove = async id => {
   const element = await this.findById(id);
-  const deletedElements = await db('schemes').where({ id }).del();
+  const deletedElements = await db('schemes')
+    .where({ id })
+    .del();
   return element;
-}
+};
+
+exports.addStep = async (step, scheme_id) => {
+  const idArray = await db('steps').insert({ ...step, scheme_id });
+  const steps = await this.findSteps(scheme_id);
+  return steps;
+};
