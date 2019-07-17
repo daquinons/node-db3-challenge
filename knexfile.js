@@ -1,7 +1,6 @@
 // Update with your config settings.
-
-module.exports = {
-
+const knex = require('knex');
+const config = {
   development: {
     client: 'sqlite3',
     useNullAsDefault: true, // needed for sqlite
@@ -21,5 +20,7 @@ module.exports = {
         conn.run('PRAGMA foreign_keys = ON', done); // turn on FK enforcement
       },
     },
-  }, 
+  },
 };
+
+module.exports = knex(config.development);
