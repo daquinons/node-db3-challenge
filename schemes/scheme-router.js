@@ -58,7 +58,7 @@ router.post('/', async (req, res) => {
 
 router.post('/:id/steps', async (req, res) => {
   const stepData = req.body;
-  const { id } = req.params; 
+  const { id } = req.params;
 
   try {
     const scheme = await Schemes.findById(id);
@@ -105,6 +105,18 @@ router.delete('/:id', async (req, res) => {
     }
   } catch (err) {
     res.status(500).json({ message: 'Failed to delete scheme' });
+  }
+});
+
+router.post('/:id/addStep', async (req, res) => {
+  const { id } = req.params;
+  const step = req.body;
+
+  try {
+    const steps = await Schemes.addStep(step, id);
+    res.status(201).json(steps);
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to create the step' });
   }
 });
 
